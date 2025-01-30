@@ -29,8 +29,12 @@ def hand_cricket():
 
         print(f"You chose {tossNum} and the computer chose {randnum}")
         sumToss = tossNum + randnum
-        SumValue = "even" if sumToss % 2 == 0 else "odd"
-        print(f"It's {SumValue}")
+         if (sumToss % 2) == 0:
+            SumValue = "even"
+            print("It's even")
+        else:
+            SumValue = "odd"
+            print("It's odd")
 
         if SumValue == toss:
             print("You win the toss!")
