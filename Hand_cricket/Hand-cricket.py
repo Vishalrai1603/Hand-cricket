@@ -1,6 +1,5 @@
 import random
 
-
 def hand_cricket():
     print("Welcome to Hand Cricket!")
     print("Rules: Choose numbers between 1 to 6. If your number matches the computer's, you're OUT!")
@@ -8,49 +7,46 @@ def hand_cricket():
     while True:  # Main loop for replaying the game
         # Toss
         print("\n--- Toss Time ---")
-        SumValue = "junk"
         print("Welcome to Hand Cricket, a new era of cricket for kids")
         randnum = random.randint(1, 10)
-        # TOSS
+        
         while True:
-            toss = input(
-                "Welcome to the toss, please choose either odd(o) or even(e):\n").lower()
-            if toss not in ['odd', 'even', 'o', 'e']:
+            toss = input("Welcome to the toss, please choose either odd(o) or even(e):\n").lower()
+            if toss not in ['odd', 'even']:
                 print("Invalid input! Please choose either 'odd' or 'even'.")
             else:
                 break
 
         while True:
             try:
-                tossNum = int(
-                    input("Please choose a number between 1 to 10:\n"))
+                tossNum = int(input("Please choose a number between 1 to 10:\n"))
                 if 1 <= tossNum <= 10:
                     break
                 else:
                     print("Invalid Input, ERROR 402 :(")
             except ValueError:
-                print("Invalid Input, Please Enter valid Input")
+                print("Invalid Input, Please Enter a valid Input")
+
         print(f"You chose {tossNum} and the computer chose {randnum}")
         sumToss = tossNum + randnum
-        if (sumToss % 2) == 0:
-            SumValue = "e"
-            print("It's even")
-        else:
-            SumValue = "o"
-            print("It's odd")
+        SumValue = "even" if sumToss % 2 == 0 else "odd"
+        print(f"It's {SumValue}")
+
         if SumValue == toss:
             print("You win the toss!")
-        batbowl = input("Would you like to bat or bowl? ").lower()
+            batbowl = input("Would you like to bat or bowl? ").lower()
+            while batbowl not in ["bat", "bowl"]:
+                batbowl = input("Invalid choice. Would you like to bat or bowl? ").lower()
+            player_batting = batbowl == "bat"
+        else:
+            print("Computer wins the toss!")
+            batbowl = random.choice(["bat", "bowl"])
+            print(f"Computer chooses to {batbowl} first.")
+            player_batting = batbowl == "bowl"
 
-        while batbowl not in ["bat", "bowl"]:  # Validate bat or bowl choice
-            batbowl = input(
-                "Invalid choice. Would you like to bat or bowl? ").lower()
-
-        # Choose number of wickets
         while True:
             try:
-                total_wickets = int(
-                    input("Enter the number of wickets you want to play with (1-10): "))
+                total_wickets = int(input("Enter the number of wickets you want to play with (1-10): "))
                 if 1 <= total_wickets <= 10:
                     break
                 else:
@@ -74,20 +70,21 @@ def hand_cricket():
                 print(f"Computer chose: {computer_input}")
                 if player_input == computer_input:
                     player_wickets += 1
-                    print(
-                        f"You're OUT! Remaining wickets: {wickets - player_wickets}")
+                    print(f"You're OUT! Remaining wickets: {wickets - player_wickets}")
                 else:
                     player_score += player_input
                     print(f"Your score: {player_score}")
-                if target and player_score > target:
+                if target is not None and player_score > target:
                     print("You chased the target successfully!")
                     break
-            return player_score, player_wickets
+            return player_score
 
         def computer_turn(target=None, wickets=total_wickets):
             print("\nComputer's Batting Turn!")
             computer_score, computer_wickets = 0, 0
             while computer_wickets < wickets:
+                computer_input = random.randint(1, 6)
+                
                 try:
                     player_input = int(input("Enter your number (1-6): "))
                     if player_input < 1 or player_input > 6:
@@ -96,53 +93,40 @@ def hand_cricket():
                 except ValueError:
                     print("Please enter a valid number.")
                     continue
-                computer_input = random.randint(1, 6)
                 print(f"Computer chose: {computer_input}")
                 if player_input == computer_input:
                     computer_wickets += 1
-                    print(
-                        f"Computer is OUT! Remaining wickets: {wickets - computer_wickets}")
+                    print(f"Computer is OUT! Remaining wickets: {wickets - computer_wickets}")
                 else:
                     computer_score += computer_input
                     print(f"Computer's score: {computer_score}")
-                if target and computer_score > target:
+                if target is not None and computer_score > target:
                     print("Computer chased the target successfully!")
                     break
-            return computer_score, computer_wickets
+            return computer_score
 
-        # Game logic based on toss outcome
-        if batbowl == "bat":
-            player_score, _ = player_turn()
+        if player_batting:
+            player_score = player_turn()
             print(f"\nYour total score: {player_score}")
             print("Now, it's the computer's turn to bat.")
-            computer_score, _ = computer_turn(target=player_score)
-            print(f"Computer's total score: {computer_score}")
-            if computer_score < player_score:
-                print("Congratulations! You win!")
-            elif computer_score > player_score:
-                print("Computer wins!")
-            else:
-                print("It's a tie!")
+            computer_score = computer_turn(target=player_score)
         else:
-            computer_score, _ = computer_turn()
+            computer_score = computer_turn()
             print(f"\nComputer's total score: {computer_score}")
             print("Now, it's your turn to bat.")
-            player_score, _ = player_turn(target=computer_score)
-            print(f"Your total score: {player_score}")
-            if player_score < computer_score:
-                print("Computer wins!")
-            elif player_score > computer_score:
-                print("Congratulations! You win!")
-            else:
-                print("It's a tie!")
+            player_score = player_turn(target=computer_score)
 
-        # Play again prompt
-        replay = input(
-            "\nDo you want to play again? (yes/no): ").strip().lower()
+        print(f"Final Scores -> You: {player_score} | Computer: {computer_score}")
+        if player_score > computer_score:
+            print("Congratulations! You win!")
+        elif player_score < computer_score:
+            print("Computer wins!")
+        else:
+            print("It's a tie!")
+
+        replay = input("\nDo you want to play again? (yes/no): ").strip().lower()
         if replay != "yes":
             print("Thanks for playing Hand Cricket! Goodbye!")
             break
 
-
-# Run the game
 hand_cricket()
