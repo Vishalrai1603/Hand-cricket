@@ -12,20 +12,32 @@ def hand_cricket():
         print("Welcome to Hand Cricket, a new era of cricket for kids")
         randnum = random.randint(1, 10)
         # TOSS
-        toss = input(
-            "Welcome to the toss, please choose either odd(o) or even(e):\n").lower()
-        tossNum = int(input("Please choose a number between 1 to 10:\n"))
-        if (tossNum > 10 or tossNum < 1):
-            print("Invalid Input, ERROR 402 :(")
-        else:
-            print(f"You chose {tossNum} and the computer chose {randnum}")
-            sumToss = tossNum + randnum
-            if (sumToss % 2) == 0:
-                SumValue = "e"
-                print("It's even")
+        while True:
+            toss = input(
+                "Welcome to the toss, please choose either odd(o) or even(e):\n").lower()
+            if toss not in ['odd', 'even', 'o', 'e']:
+                print("Invalid input! Please choose either 'odd' or 'even'.")
             else:
-                SumValue = "o"
-                print("It's odd")
+                break
+
+        while True:
+            try:
+                tossNum = int(
+                    input("Please choose a number between 1 to 10:\n"))
+                if 1 <= tossNum <= 10:
+                    break
+                else:
+                    print("Invalid Input, ERROR 402 :(")
+            except ValueError:
+                print("Invalid Input, Please Enter valid Input")
+        print(f"You chose {tossNum} and the computer chose {randnum}")
+        sumToss = tossNum + randnum
+        if (sumToss % 2) == 0:
+            SumValue = "e"
+            print("It's even")
+        else:
+            SumValue = "o"
+            print("It's odd")
         if SumValue == toss:
             print("You win the toss!")
         batbowl = input("Would you like to bat or bowl? ").lower()
@@ -88,7 +100,8 @@ def hand_cricket():
                 print(f"Computer chose: {computer_input}")
                 if player_input == computer_input:
                     computer_wickets += 1
-                    print(f"Computer is OUT! Remaining wickets: {wickets - computer_wickets}")
+                    print(
+                        f"Computer is OUT! Remaining wickets: {wickets - computer_wickets}")
                 else:
                     computer_score += computer_input
                     print(f"Computer's score: {computer_score}")
