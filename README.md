@@ -52,9 +52,6 @@ Hand Cricket is a fun and interactive game played between a user and a computer.
 ## 🤝 Contributing
 Feel free to fork the repository and submit pull requests with improvements or bug fixes. Contributions are always welcome!  
 
-## 📜 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 👨‍💻 Author
 **Vishal Rai**  
 🔗 [GitHub Profile](https://github.com/Vishalrai1603)  
