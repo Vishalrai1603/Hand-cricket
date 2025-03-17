@@ -25,16 +25,15 @@ Hand Cricket is a fun and interactive game played between a user and a computer.
 7️⃣ The player with the highest score wins!  
 
 ## 🚀 Installation
-1. Ensure Python is installed on your system. You can download it from [Python's official website](https://www.python.org/).
-2. Clone this repository:
+1. Clone this repository:
    ```bash
    git clone https://github.com/Vishalrai1603/Hand-cricket.git
    ```
-3. Navigate to the project directory:
+2. Navigate to the project directory:
    ```bash
    cd Hand-cricket
    ```
-4. Run the script:
+3. Run the script:
    ```bash
    python hand_cricket.py
    ```
